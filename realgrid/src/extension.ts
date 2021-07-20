@@ -1,5 +1,5 @@
 import * as vscode from 'vscode';
-import * as bs from './basic-codes';
+import * as bc from './basic-codes';
 
 export function activate(context: vscode.ExtensionContext) {
 
@@ -8,7 +8,7 @@ export function activate(context: vscode.ExtensionContext) {
 			const realGridCompletion = new vscode.CompletionItem('RealGrid');
 
 			const snippetCompletion = new vscode.CompletionItem('RG Basic Code');
-			snippetCompletion.insertText = new vscode.SnippetString(bs.basicCode);
+			snippetCompletion.insertText = new vscode.SnippetString(bc.basicCode);
 			snippetCompletion.documentation = new vscode.MarkdownString("Inserts a basic codes for RealGrid.");
 
 			return [
