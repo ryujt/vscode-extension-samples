@@ -2,7 +2,6 @@ import * as vscode from 'vscode';
 import * as bc from './basic-codes';
 
 export function activate(context: vscode.ExtensionContext) {
-
 	const ruleBasicCode = {
 		provideCompletionItems(document: vscode.TextDocument, position: vscode.Position, token: vscode.CancellationToken, context: vscode.CompletionContext) {
 			const realGridCompletion = new vscode.CompletionItem('RealGrid');
