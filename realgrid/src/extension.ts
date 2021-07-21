@@ -8,7 +8,7 @@ export function activate(context: vscode.ExtensionContext) {
 
 			const snippetCompletion = new vscode.CompletionItem('RG Basic Code');
 			snippetCompletion.insertText = new vscode.SnippetString(bc.basicCode);
-			snippetCompletion.documentation = new vscode.MarkdownString("Inserts a basic codes for RealGrid.");
+			snippetCompletion.documentation = new vscode.MarkdownString('Inserts a basic codes for RealGrid.');
 
 			return [
 				realGridCompletion,
@@ -17,7 +17,7 @@ export function activate(context: vscode.ExtensionContext) {
 		}		
 	};
 	const providerBasicCode = vscode.languages.registerCompletionItemProvider(
-		['html', 'javascript'], 
+		['plaintext', 'html', 'javascript'], 
 		ruleBasicCode
 	);
 
@@ -37,7 +37,7 @@ export function activate(context: vscode.ExtensionContext) {
 		}
 	}; 
 	const providerCompletion = vscode.languages.registerCompletionItemProvider(
-		['html', 'javascript'], 
+		['plaintext', 'html', 'javascript'], 
 		ruleCompletion, '.'
 	);
 
