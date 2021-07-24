@@ -1,22 +1,45 @@
 import * as vscode from 'vscode';
-import * as bc from './basic-codes';
 
 export function activate(context: vscode.ExtensionContext) {
-	const ruleBasicCode = {
-		provideCompletionItems(document: vscode.TextDocument, position: vscode.Position, token: vscode.CancellationToken, context: vscode.CompletionContext) {
-			const snippetCompletion = new vscode.CompletionItem('RG Basic Code');
-			snippetCompletion.insertText = new vscode.SnippetString(bc.basicCode);
-			snippetCompletion.documentation = new vscode.MarkdownString('Inserts a basic codes for RealGrid.');
+	const ruleRealGrid = {
+		provideCompletionItems(document: vscode.TextDocument, position: vscode.Position) {
+			const linePrefix = document.lineAt(position).text.substr(0, position.character);
+			if (linePrefix.endsWith('RealGrid.')) {
+				return undefined;
+			}
 
 			return [
-				snippetCompletion,
+				new vscode.CompletionItem('RealGrid', vscode.CompletionItemKind.Module),
 			];
-		}		
-	};
-	const providerBasicCode = vscode.languages.registerCompletionItemProvider(
+		}
+	}; 
+
+	const providerRealGrid = vscode.languages.registerCompletionItemProvider(
 		['plaintext', 'html', 'javascript'], 
-		ruleBasicCode
+		ruleRealGrid, '.'
 	);
 
-	context.subscriptions.push(providerBasicCode);
+    // 규칙을 정의한 객체를 만들기
+	const ruleCompletion = {
+		provideCompletionItems(document: vscode.TextDocument, position: vscode.Position) {
+			const linePrefix = document.lineAt(position).text.substr(0, position.character);
+			if (!linePrefix.endsWith('RealGrid.')) {
+				return undefined;
+			}
+
+			return [
+				new vscode.CompletionItem('GridView', vscode.CompletionItemKind.Class),
+				new vscode.CompletionItem('TreeView', vscode.CompletionItemKind.Class),			
+			];
+		}
+	}; 
+
+    // 규칙을 프로바이더에 등록하기 (적용될 소스의 타입을 결정)
+    const providerCompletion = vscode.languages.registerCompletionItemProvider(
+		['plaintext', 'html', 'javascript'], 
+		ruleCompletion, '.'
+	);
+
+    // 컨텍스트의 subscriptions 객체에 프로바이더를 push
+    context.subscriptions.push(providerRealGrid, providerCompletion);
 }
