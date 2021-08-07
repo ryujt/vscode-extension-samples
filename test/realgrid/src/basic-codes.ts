@@ -14,9 +14,6 @@ property_direction.insertText = new vscode.SnippetString('direction: "${1|horizo
 let menu_type = new vscode.CompletionItem("type: (menu item)");
 menu_type.insertText = new vscode.SnippetString('type: "${1|check,radio|}"]');
 
-let menu_group = new vscode.CompletionItem("group: (menu item)");
-menu_group.insertText = new vscode.SnippetString('group: "${1}"]');
-
 function keywords() {
     var result:vscode.CompletionItem[] = [];
 
@@ -75,7 +72,6 @@ export function getCompletionItems() {
     result.push(property_direction);
 
     result.push(menu_type);
-    result.push(menu_group);
 
     return result;
 }
@@ -93,12 +89,14 @@ gridView_setColumnProperty.insertText = new vscode.SnippetString('setColumnPrope
 
 let gridView_onCellButtonClicked = new vscode.CompletionItem("onCellButtonClicked"); 
 gridView_onCellButtonClicked.insertText = new vscode.SnippetString(
-`onCellButtonClickedgrd = function(grid, index, column) {\n
+`onCellButtonClickedgrd = function(grid, index, column) {
+    \${1}
 }`);
 
 let gridView_onMenuItemClicked = new vscode.CompletionItem("onMenuItemClicked"); 
 gridView_onMenuItemClicked.insertText = new vscode.SnippetString(
-`onMenuItemClicked = function(grid, item, clickData) {\n
+`onMenuItemClicked = function(grid, item, clickData) {
+    \${1}
 }`);
 
 export function getGridViewCompletionItem() {
