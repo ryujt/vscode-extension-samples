@@ -1,7 +1,8 @@
 {
 	"name": "realgrid",
 	"displayName": "RealGrid",
-	"description": "",
+	"description": "RealGrid Code Completion",
+	"publisher": "RealGridCodeCompletion",
 	"version": "0.0.1",
 	"engines": {
 		"vscode": "^1.58.0"
