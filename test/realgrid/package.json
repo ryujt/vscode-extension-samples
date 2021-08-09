@@ -2,8 +2,9 @@
 	"name": "realgrid",
 	"displayName": "RealGrid",
 	"description": "RealGrid Code Completion",
+	"icon": "realgrid-logo.png",
 	"publisher": "RealGridCodeCompletion",
-	"version": "0.0.1",
+	"version": "0.0.5",
 	"engines": {
 		"vscode": "^1.58.0"
 	},
