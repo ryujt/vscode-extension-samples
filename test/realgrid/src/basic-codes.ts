@@ -14,14 +14,31 @@ property_direction.insertText = new vscode.SnippetString('direction: "${1|horizo
 let menu_type = new vscode.CompletionItem("type: (menu item)");
 menu_type.insertText = new vscode.SnippetString('type: "${1|check,radio|}"]');
 
-function keywords() {
+function identifiers() {
     var result:vscode.CompletionItem[] = [];
 
-    // TODO: gridView와 같은 변수명 등은 현재 파일의 텍스트를 파싱으로 처리하기
-    const words = ["RealGrid", "gridView", "index", "column"];
+    // TODO: 파싱을 통해서 변수명 등을 가져오기
+    const words = ["provider", "gridView"];
 
     for (let word of words) {
         let item = new vscode.CompletionItem(word);
+        result.push(item);
+    }
+    return result;
+}
+
+// TODO: 서버에서 다운받는 형식으로
+const ShortenedDatas = [
+    {name: "new RealGrid.LocalDataProvider()", text: "const provider = new RealGrid.LocalDataProvider();"},
+    {name: "new RealGrid.GridView()", text: `const gridView = new RealGrid.GridView("\${1}");`},
+];
+
+function Shortened() {
+    var result:vscode.CompletionItem[] = [];
+
+    for (let word of ShortenedDatas) {
+        let item = new vscode.CompletionItem(word.name);
+        item.insertText = new vscode.SnippetString(word.text);
         result.push(item);
     }
     return result;
@@ -40,7 +57,8 @@ function string_properties() {
 
 function number_properties() {
     var result:vscode.CompletionItem[] = [];
-    const properties = ["step:", "min:", "max:", "delay:"];
+    // TODO: editor 등은 객체형 속성으로 분리
+    const properties = ["editor:", "step:", "min:", "max:", "delay:"];
     for (let property of properties) {
         let item = new vscode.CompletionItem(property);
         item.insertText = new vscode.SnippetString(property + ' ${1}');
@@ -62,23 +80,20 @@ function boolean_properties() {
 
 export function getCompletionItems() {
     var result:vscode.CompletionItem[] = [];
-    result = result.concat(keywords());
-
+    result = result.concat(identifiers());
+    result = result.concat(Shortened());
     result = result.concat(string_properties());
     result = result.concat(boolean_properties());
-
     result.push(property_button);
     result.push(property_children);
     result.push(property_direction);
-
     result.push(menu_type);
-
     return result;
 }
 
 // getGridViewCompletionItem
 
-let gridView_columnByName = new vscode.CompletionItem('columnByName');
+let gridView_columnByName = new vscode.CompletionItem('columnByName()');
 gridView_columnByName.insertText = new vscode.SnippetString('columnByName("${1}")');
 
 let gridView_addPopupMenu = new vscode.CompletionItem("addPopupMenu");
@@ -89,7 +104,7 @@ gridView_setColumnProperty.insertText = new vscode.SnippetString('setColumnPrope
 
 let gridView_onCellButtonClicked = new vscode.CompletionItem("onCellButtonClicked"); 
 gridView_onCellButtonClicked.insertText = new vscode.SnippetString(
-`onCellButtonClickedgrd = function(grid, index, column) {
+`onCellButtonClicked = function(grid, index, column) {
     \${1}
 }`);
 
@@ -112,7 +127,7 @@ export function getGridViewCompletionItem() {
 // getDotCompletionItem
 
 let column_buttonVisibility = new vscode.CompletionItem("buttonVisibility");
-column_buttonVisibility.insertText = new vscode.SnippetString('buttonVisibility = ${2|always,default,visible,hidden|};');
+column_buttonVisibility.insertText = new vscode.SnippetString('buttonVisibility = "${2|always,default,visible,hidden|}";');
 
 export function getDotCompletionItem() {
     var result:vscode.CompletionItem[] = [];
