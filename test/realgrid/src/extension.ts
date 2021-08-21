@@ -9,7 +9,7 @@ export function activate(context: vscode.ExtensionContext) {
 		}		
 	};
 	const providerBasicCode = vscode.languages.registerCompletionItemProvider(
-		['plaintext', 'html', 'javascript'], 
+		['html', 'javascript'], 
 		ruleBasicCode
 	);
 
@@ -20,13 +20,13 @@ export function activate(context: vscode.ExtensionContext) {
 			if (linePrefix.endsWith('gridView.')) return bc.getGridViewCompletionItem();
 			if (linePrefix.endsWith('index.')) return [new vscode.CompletionItem('itemIndex')];
 			if (linePrefix.endsWith('column.'))return [new vscode.CompletionItem('fieldName')];
-			if (linePrefix.endsWith('.')) return bc.getDotCompletionItem();
+			if (linePrefix.endsWith('.')) return bc.getDotCompletionItem(linePrefix);
 
 			return undefined;
 		}
 	}; 
 	const providerCompletion = vscode.languages.registerCompletionItemProvider(
-		['plaintext', 'html', 'javascript'], 
+		['html', 'javascript'], 
 		ruleCompletion, '.'
 	);
 

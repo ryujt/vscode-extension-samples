@@ -1,4 +1,5 @@
 import * as vscode from 'vscode';
+import * as completions from './completions';
 
 // getCompletionItems
 
@@ -126,11 +127,20 @@ export function getGridViewCompletionItem() {
 
 // getDotCompletionItem
 
-let column_buttonVisibility = new vscode.CompletionItem("buttonVisibility");
-column_buttonVisibility.insertText = new vscode.SnippetString('buttonVisibility = "${2|always,default,visible,hidden|}";');
-
-export function getDotCompletionItem() {
+export function getDotCompletionItem(linePrefix: String) {
     var result:vscode.CompletionItem[] = [];
-    result.push(column_buttonVisibility);
+    for (let i of completions.dotCompletions) {
+        if (!!i.endwith) {
+            if (linePrefix.endsWith(i.endwith) === false) {
+                continue;
+            }
+        }
+
+        let item = new vscode.CompletionItem(i.name);
+        if (!!i.text) {
+            item.insertText = new vscode.SnippetString(i.text);
+        }
+        result.push(item);
+    }    
     return result;
 }
