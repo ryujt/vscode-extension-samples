@@ -17,7 +17,7 @@ export function activate(context: vscode.ExtensionContext) {
 		provideCompletionItems(document: vscode.TextDocument, position: vscode.Position) {
 			const linePrefix = document.lineAt(position).text.substr(0, position.character);
 
-			if (linePrefix.endsWith('gridView.')) return bc.getGridViewCompletionItem();
+			// if (linePrefix.endsWith('gridView.')) return bc.getGridViewCompletionItem();
 			if (linePrefix.endsWith('index.')) return [new vscode.CompletionItem('itemIndex')];
 			if (linePrefix.endsWith('column.'))return [new vscode.CompletionItem('fieldName')];
 			if (linePrefix.endsWith('.')) return bc.getDotCompletionItem(linePrefix);

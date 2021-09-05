@@ -19,7 +19,9 @@ function identifiers() {
     var result:vscode.CompletionItem[] = [];
 
     // TODO: 파싱을 통해서 변수명 등을 가져오기
-    const words = ["provider", "gridView"];
+    const words = [
+        "provider", "gridView", "series", "sparkline", "sparkcolumn", "sparkwinloss",
+    ];
 
     for (let word of words) {
         let item = new vscode.CompletionItem(word);
@@ -47,7 +49,10 @@ function Shortened() {
 
 function string_properties() {
     var result:vscode.CompletionItem[] = [];
-    const properties = ["fieldName:", "name:", "label:", "group:", "tag:"];
+    const properties = [
+        "fieldName:", "fieldNames:", "name:", "type:", "label:", "group:", "tag:",
+        "header:", "column:", "dataType:", "datetimeFormat:"
+    ];
     for (let property of properties) {
         let item = new vscode.CompletionItem(property);
         item.insertText = new vscode.SnippetString(property + ' "${1}"');
@@ -58,8 +63,7 @@ function string_properties() {
 
 function number_properties() {
     var result:vscode.CompletionItem[] = [];
-    // TODO: editor 등은 객체형 속성으로 분리
-    const properties = ["editor:", "step:", "min:", "max:", "delay:"];
+    const properties = ["width:", "height:", "baseValue:", "belowHeight:", "step:", "min:", "max:", "delay:"];
     for (let property of properties) {
         let item = new vscode.CompletionItem(property);
         item.insertText = new vscode.SnippetString(property + ' ${1}');
@@ -79,49 +83,41 @@ function boolean_properties() {
     return result;
 }
 
+function object_properties() {
+    var result:vscode.CompletionItem[] = [];
+    const properties = ["editor:", "header:", "renderer:"];
+    for (let property of properties) {
+        let item = new vscode.CompletionItem(property);
+        item.insertText = new vscode.SnippetString(property + ' \{${1}\}');
+        result.push(item);
+    }
+    return result;
+}
+
+function array_properties() {
+    var result:vscode.CompletionItem[] = [];
+    const properties = ["item:"];
+    for (let property of properties) {
+        let item = new vscode.CompletionItem(property);
+        item.insertText = new vscode.SnippetString(property + ' \[${1}\]');
+        result.push(item);
+    }
+    return result;
+}
+
 export function getCompletionItems() {
     var result:vscode.CompletionItem[] = [];
     result = result.concat(identifiers());
     result = result.concat(Shortened());
     result = result.concat(string_properties());
+    result = result.concat(number_properties());
     result = result.concat(boolean_properties());
+    result = result.concat(object_properties());
+    result = result.concat(array_properties());
     result.push(property_button);
     result.push(property_children);
     result.push(property_direction);
     result.push(menu_type);
-    return result;
-}
-
-// getGridViewCompletionItem
-
-let gridView_columnByName = new vscode.CompletionItem('columnByName()');
-gridView_columnByName.insertText = new vscode.SnippetString('columnByName("${1}")');
-
-let gridView_addPopupMenu = new vscode.CompletionItem("addPopupMenu");
-gridView_addPopupMenu.insertText = new vscode.SnippetString('addPopupMenu("${1}", ${2});');
-
-let gridView_setColumnProperty = new vscode.CompletionItem("setColumnProperty");
-gridView_setColumnProperty.insertText = new vscode.SnippetString('setColumnProperty("${1}", "${2}", { ${3} });');
-
-let gridView_onCellButtonClicked = new vscode.CompletionItem("onCellButtonClicked"); 
-gridView_onCellButtonClicked.insertText = new vscode.SnippetString(
-`onCellButtonClicked = function(grid, index, column) {
-    \${1}
-}`);
-
-let gridView_onMenuItemClicked = new vscode.CompletionItem("onMenuItemClicked"); 
-gridView_onMenuItemClicked.insertText = new vscode.SnippetString(
-`onMenuItemClicked = function(grid, item, clickData) {
-    \${1}
-}`);
-
-export function getGridViewCompletionItem() {
-    var result:vscode.CompletionItem[] = [];
-    result.push(gridView_columnByName);
-    result.push(gridView_addPopupMenu);
-    result.push(gridView_setColumnProperty);
-    result.push(gridView_onCellButtonClicked);
-    result.push(gridView_onMenuItemClicked);
     return result;
 }
 
