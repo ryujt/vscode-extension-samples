@@ -92,44 +92,22 @@ export function getCompletionItems() {
     return result;
 }
 
-// getGridViewCompletionItem
-
-let gridView_columnByName = new vscode.CompletionItem('columnByName()');
-gridView_columnByName.insertText = new vscode.SnippetString('columnByName("${1}")');
-
-let gridView_addPopupMenu = new vscode.CompletionItem("addPopupMenu");
-gridView_addPopupMenu.insertText = new vscode.SnippetString('addPopupMenu("${1}", ${2});');
-
-let gridView_setColumnProperty = new vscode.CompletionItem("setColumnProperty");
-gridView_setColumnProperty.insertText = new vscode.SnippetString('setColumnProperty("${1}", "${2}", { ${3} });');
-
-let gridView_onCellButtonClicked = new vscode.CompletionItem("onCellButtonClicked"); 
-gridView_onCellButtonClicked.insertText = new vscode.SnippetString(
-`onCellButtonClicked = function(grid, index, column) {
-    \${1}
-}`);
-
-let gridView_onMenuItemClicked = new vscode.CompletionItem("onMenuItemClicked"); 
-gridView_onMenuItemClicked.insertText = new vscode.SnippetString(
-`onMenuItemClicked = function(grid, item, clickData) {
-    \${1}
-}`);
-
-export function getGridViewCompletionItem() {
-    var result:vscode.CompletionItem[] = [];
-    result.push(gridView_columnByName);
-    result.push(gridView_addPopupMenu);
-    result.push(gridView_setColumnProperty);
-    result.push(gridView_onCellButtonClicked);
-    result.push(gridView_onMenuItemClicked);
-    return result;
-}
-
 // getDotCompletionItem
 
 export function getDotCompletionItem(linePrefix: String) {
     var result:vscode.CompletionItem[] = [];
     for (let i of completions.dotCompletions) {
+        // TODO: 파싱을 통해서 변수명 등을 가져오기
+        if (!!i.className) {
+            let condition = 
+                linePrefix.endsWith("gridView.") ||
+                linePrefix.endsWith("gridView1.") ||
+                linePrefix.endsWith("gridView2.");
+            if (condition === false) {
+                continue;
+            }
+        }
+
         if (!!i.endwith) {
             if (linePrefix.endsWith(i.endwith) === false) {
                 continue;

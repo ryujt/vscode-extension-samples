@@ -1,13 +1,38 @@
 export const dotCompletions = [
     {
-        name: 'length',
-    },    
+        name: 'columnByName()',
+        text: 'columnByName("${1}")',
+        className: 'GridView',
+    },
     {
-        name: 'buttonVisibility',
-        text: 'buttonVisibility = "${2|always,default,visible,hidden|}";',
+        name: 'addPopupMenu()',
+        text: 'addPopupMenu("${1}", ${2});',
+        className: 'GridView',
+    },
+    {
+        name: 'setColumnProperty()',
+        text: 'setColumnProperty("${1}", "${2}", { ${3} });',
+        className: 'GridView',
+    },
+    {
+        name: 'onCellButtonClicked',
+        text: 
+`onCellButtonClicked = function(grid, index, column) {
+    \${1}
+}`,
+        className: 'GridView',
+    },
+    {
+        name: 'onMenuItemClicked',
+        text: 
+`onMenuItemClicked = function(grid, item, clickData) {
+    \${1}
+}`,
+        className: 'GridView',
     },
     {
         name: 'editOptions',
+        className: 'GridView',
     },
     {
         name: 'movable',
@@ -16,6 +41,7 @@ export const dotCompletions = [
     },
     {
         name: 'displayOptions',
+        className: 'GridView',
     },
     {
         name: 'rowMovable',
@@ -61,5 +87,13 @@ export const dotCompletions = [
     \${1}
 }`,
         endwith: 'dataDropOptions.',
+    },
+
+    {
+        name: 'length',
+    },    
+    {
+        name: 'buttonVisibility',
+        text: 'buttonVisibility = "${2|always,default,visible,hidden|}";',
     },
 ];
