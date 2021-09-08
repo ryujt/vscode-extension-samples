@@ -1,18 +1,24 @@
 export const dotCompletions = [
+    // gridView.
+    {
+        name: 'setFocus()',
+        text: 'setFocus()',
+        endwith: 'gridView.',
+    },
     {
         name: 'columnByName()',
         text: 'columnByName("${1}")',
-        className: 'GridView',
+        endwith: 'gridView.',
     },
     {
         name: 'addPopupMenu()',
         text: 'addPopupMenu("${1}", ${2});',
-        className: 'GridView',
+        endwith: 'gridView.',
     },
     {
         name: 'setColumnProperty()',
         text: 'setColumnProperty("${1}", "${2}", { ${3} });',
-        className: 'GridView',
+        endwith: 'gridView.',
     },
     {
         name: 'onCellButtonClicked',
@@ -20,7 +26,7 @@ export const dotCompletions = [
 `onCellButtonClicked = function(grid, index, column) {
     \${1}
 }`,
-        className: 'GridView',
+        endwith: 'gridView.',
     },
     {
         name: 'onMenuItemClicked',
@@ -28,29 +34,58 @@ export const dotCompletions = [
 `onMenuItemClicked = function(grid, item, clickData) {
     \${1}
 }`,
-        className: 'GridView',
+        endwith: 'gridView.',
     },
     {
-        name: 'editOptions',
-        className: 'GridView',
+        name: 'getCurrent()',
+        text: 'getCurrent()',
+        endwith: 'gridView.',
     },
+
+    // getCurrent().
+    {
+        name: 'itemIndex',
+        text: 'itemIndex',
+        endwith: 'getCurrent().',
+    },
+
+    // options.
+    {
+        name: 'modal',
+        text: 'modal = ${1|true,false|};',
+        endwith: 'options.',
+    },
+    {
+        name: 'saveLabel',
+        text: 'saveLabel = "${1}";',
+        endwith: 'options.',
+    },
+    {
+        name: 'cancelLabel',
+        text: 'cancelLabel = "${1}";',
+        endwith: 'options.',
+    },
+
+    // editOptions.
     {
         name: 'movable',
         text: 'movable = ${1|true,false|};',
         endwith: 'editOptions.',
     },
     {
-        name: 'displayOptions',
-        className: 'GridView',
+        name: 'appendable',
+        text: 'appendable = ${1|true,false|};',
+        endwith: 'editOptions.',
     },
+
+    // displayOptions.
     {
         name: 'rowMovable',
         text: 'rowMovable = ${1|true,false|};',
         endwith: 'displayOptions.',
     },
-    {
-        name: 'dataDropOptions',
-    },
+
+    // dataDropOptions.
     {
         name: 'dropMode',
         text: 'dropMode = ${1|"copy","move"|};',
@@ -89,11 +124,21 @@ export const dotCompletions = [
         endwith: 'dataDropOptions.',
     },
 
-    {
-        name: 'length',
-    },    
+    // name only
+    { name: 'length' },
+    { name: 'options' },
+    { name: 'editOptions' },
+    { name: 'displayOptions' },
+    { name: 'dataDropOptions' },
+    { name: 'appendRow()' },
+
+    // name + text
     {
         name: 'buttonVisibility',
         text: 'buttonVisibility = "${2|always,default,visible,hidden|}";',
+    },
+    {
+        name: 'visible',
+        text: 'visible = ${1|true,false|};',
     },
 ];
